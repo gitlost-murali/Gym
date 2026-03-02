@@ -436,9 +436,9 @@ class LocalVLLMModel(VLLMModel):
         assert "VLLM_RAY_DP_PACK_STRATEGY" in env_vars, (
             f"Please provide a value for `VLLM_RAY_DP_PACK_STRATEGY` for `{self.config.name}`"
         )
-        assert "data_parallel_size" in server_args
-        assert "tensor_parallel_size" in server_args
-        assert "pipeline_parallel_size" in server_args
+        assert server_args.get("data_parallel_size")
+        assert server_args.get("tensor_parallel_size")
+        assert server_args.get("pipeline_parallel_size")
 
         # With our vLLM patches, this assert is no longer necessary
         # Ray backend only works if dp_size > 1
